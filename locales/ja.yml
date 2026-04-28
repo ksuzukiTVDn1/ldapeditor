@@ -1,0 +1,105 @@
+_version: 2
+
+# ステータスバーのメッセージ
+status:
+  connected: "接続: %{uri}"
+  connected_select_context: "接続: %{uri}  |  naming context を選択してください"
+  connection_failed: "接続失敗: %{uri}"
+  schema_summary: "%{prev}  [Schema: %{attrs} attrs, %{ocs} OCs]"
+  schema_error: "%{prev}  [Schema error: %{error}]"
+  schema_not_loaded: "スキーマが未ロードです"
+  schema_required_for_create: "スキーマが未ロードのため作成できません"
+  no_structural_oc: "STRUCTURAL の objectClass が見つかりません"
+  no_must_may_attrs: "'%{oc}' に objectClass 以外の MUST/MAY 属性がなく、新規作成不可"
+  no_oc_to_add: "追加可能な objectClass がありません"
+  op_readonly: "operational 属性は読み取り専用です"
+  oc_delete_only: "objectClass は削除のみ可能です (d)"
+  root_undeletable: "ルート (suffix) は削除できません"
+  field_empty: "'%{field}' が未入力です"
+  input_must_attr: "必須属性を入力してください: %{attr}"
+  cancelled: "キャンセルしました"
+  oc_added: "objectClass 追加: %{name}"
+  oc_add_error: "OC 追加エラー: %{error}"
+  oc_deleted: "objectClass 削除: %{name}"
+  modified: "更新: %{attr}"
+  added: "追加: %{attr}"
+  deleted: "削除: %{dn}"
+  created: "作成: %{dn}"
+  add_error: "追加エラー: %{error}"
+  delete_error: "削除エラー: %{error}"
+  fetch_error: "取得エラー: %{error}"
+  search_error: "検索エラー: %{error}"
+  parent_refetch_failed: "%{prev}  (親の再取得失敗: %{error})"
+  error_prefix: "エラー: %{error}"
+  expand_confirm: "%{count} 件見つかりました。全件表示しますか？ [y/N]"
+
+# UI ラベル
+ui:
+  tree_pane: "ツリー"
+  detail_select_entry: "エントリを選択してください"
+  detail_dn: "dn"
+  detail_op_readonly: "  [読み取り専用]"
+  detail_add_oc: " + objectClass を追加"
+  detail_add_attr: " + 属性を追加"
+  naming_context: "Naming Context"
+  search_title: "検索: %{filter}  (%{hits} 件)"
+  attr_picker_title: "属性ピッカー"
+  oc_picker_title: "objectClass ピッカー"
+  create_pick_oc_title: "子エントリ作成 — STRUCTURAL OC を選択 (%{parent})"
+  create_pick_rdn_title: "RDN 属性を選択 — %{oc}"
+  create_form_title: "子エントリ作成: %{oc}"
+  parent_label: " 親  : "
+  dn_label: " DN  : "
+  rdn_badge: "  ← (RDN)"
+  action_dialog: "アクション"
+  oc_delete_title: "objectClass 削除確認"
+  oc_delete_target: " 削除: "
+  oc_delete_managed_attrs: " 削除するオブジェクトクラスが管理している属性:"
+  oc_delete_overflow: "   ... 他 %{count} 行"
+  oc_delete_confirm: " 削除しますか？ [y/N]"
+  filter_label: " フィルタ: "
+  attr_name_input: " 属性名: "
+  has_children_warn: "  ⚠ 子エントリあり (サーバが拒否します)"
+  entry_delete_confirm: " エントリ削除: %{dn}%{warn}  [y/N]"
+  attr_value_delete_confirm: " 削除  %{attr}: %{value}  [y/N]"
+
+# Suffix 選択画面のヘルプ
+suffix_help:
+  select: " ↑↓ / j k : 選択"
+  browse: " Enter     : ブラウズ開始"
+  quit: " q         : 終了"
+
+# ヒントバーのテキスト
+hint:
+  search_input: " Enter: 検索  Esc: キャンセル"
+  attr_name: " Enter: 値の入力へ  Esc: キャンセル"
+  edit_value: " Enter: 適用  Esc: キャンセル"
+  oc_delete: " y: 削除実行  その他: キャンセル"
+  suffix_select: " %{status}  |  ↑↓: 選択  Enter: ブラウズ  q: 終了"
+  picker_status: " %{status}  |  Enter: 選択  Esc: キャンセル  ↑↓/jk: 移動"
+  picker_window: " Enter: 選択  Esc: キャンセル  ↑↓: 移動  入力: フィルタ"
+  create_pick_oc: "Enter: 選択  Esc: キャンセル  ↑↓/jk: 移動  入力: フィルタ"
+  create_pick_rdn: "Enter: 確定  Esc: キャンセル  ↑↓/jk: 移動"
+  create_form: "Tab/↓: 次  Shift+Tab/↑: 前  Enter: 確定  Esc: キャンセル"
+  create_status: " %{status}  |  %{hint}"
+  browse_tree: "↑↓: 選択  →: 展開  ←: 折畳  a: 子作成  d: 削除  /: 検索  Ctrl+r: 再読込  Tab: 詳細  q: 終了"
+  browse_detail: "↑↓: 行  ←→: 列  e: 編集  a: 追加  d: 削除  Enter: アクション  Ctrl+r: 再読込  q: 終了"
+  search_results_tree: "↑↓: 選択  /: 新規検索  Esc: 戻る  Tab: 詳細  q: 終了"
+  search_results_detail: "↑↓: 行  ←→: 列  e: 編集  a: 追加  d: 削除  Enter: アクション  q: 終了"
+  browse_status: " %{status}  |  %{hint}"
+
+# アクションダイアログのラベル
+action:
+  oc_label: "objectClass: %{value}"
+  del_only: "  [d] 削除  [Esc] キャンセル"
+  edit_add: "  [e] 編集    [a] 値を追加"
+  del_cancel: "  [d] 削除  [Esc] キャンセル"
+
+# 編集入力欄の動詞プレフィクス
+input:
+  add: "追加"
+  edit: "編集"
+
+# 認証
+auth:
+  password_prompt: "パスワード: "

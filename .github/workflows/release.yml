@@ -1,0 +1,128 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  # ── Native build: x86_64-linux-gnu in Rocky 9 (glibc 2.34, OpenSSL 3) ─────
+  build-x86_64-gnu:
+    name: Build x86_64-linux-gnu
+    runs-on: ubuntu-latest
+    container:
+      image: rockylinux:9
+    steps:
+      - name: Install build dependencies
+        # Rocky 9 ships curl-minimal which conflicts with curl; curl-minimal
+        # already supports the flags rustup needs (--proto, --tlsv1.2, -sSf).
+        run: dnf install -y gcc openssl-devel pkgconf-pkg-config git
+
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+            | sh -s -- -y --default-toolchain stable --no-modify-path
+          echo "${HOME}/.cargo/bin" >> "${GITHUB_PATH}"
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Build release binary
+        run: cargo build --release
+
+      - name: Verify glibc version requirements
+        run: objdump -p target/release/ldapeditor | grep GLIBC || true
+
+      - name: Stage release asset
+        run: cp target/release/ldapeditor "ldapeditor-${{ github.ref_name }}-x86_64-linux-gnu"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: x86_64-linux-gnu
+          path: ldapeditor-*-x86_64-linux-gnu
+
+  # ── Cross builds: aarch64-gnu, x86_64-musl, aarch64-musl ──────────────────
+  # cross-rs/cross handles toolchain + sysroot; vendored-tls bundles OpenSSL.
+  build-cross:
+    name: Build ${{ matrix.asset }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-unknown-linux-gnu
+            asset: aarch64-linux-gnu
+          - target: x86_64-unknown-linux-musl
+            asset: x86_64-linux-musl
+          - target: aarch64-unknown-linux-musl
+            asset: aarch64-linux-musl
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+
+      - name: Install cross
+        run: cargo install cross --locked
+
+      - name: Build release binary
+        run: cross build --release --target ${{ matrix.target }} --features vendored-tls
+
+      - name: Stage release asset
+        run: cp "target/${{ matrix.target }}/release/ldapeditor" "ldapeditor-${{ github.ref_name }}-${{ matrix.asset }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset }}
+          path: ldapeditor-*-${{ matrix.asset }}
+
+  # ── Aggregate: SHA256SUMS + GitHub Release ─────────────────────────────────
+  release:
+    name: Create GitHub Release
+    needs: [build-x86_64-gnu, build-cross]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Generate SHA256SUMS
+        working-directory: artifacts
+        run: sha256sum ldapeditor-* > SHA256SUMS
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/ldapeditor-*
+            artifacts/SHA256SUMS
+          generate_release_notes: true
+
+  # ── Publish to crates.io ────────────────────────────────────────────────────
+  # Requires CARGO_REGISTRY_TOKEN secret (generate at https://crates.io/me).
+  # Runs only after binaries built successfully so a failed build does not
+  # publish a crate that has no matching GitHub Release.
+  publish-crate:
+    name: Publish to crates.io
+    needs: [build-x86_64-gnu, build-cross]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish

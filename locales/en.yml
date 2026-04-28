@@ -1,0 +1,105 @@
+_version: 2
+
+# Status bar messages
+status:
+  connected: "Connected: %{uri}"
+  connected_select_context: "Connected: %{uri}  |  Select a naming context"
+  connection_failed: "Connection failed: %{uri}"
+  schema_summary: "%{prev}  [Schema: %{attrs} attrs, %{ocs} OCs]"
+  schema_error: "%{prev}  [Schema error: %{error}]"
+  schema_not_loaded: "Schema not loaded"
+  schema_required_for_create: "Cannot create entry: schema not loaded"
+  no_structural_oc: "No STRUCTURAL objectClass found"
+  no_must_may_attrs: "'%{oc}' has no MUST/MAY attributes other than objectClass; cannot create"
+  no_oc_to_add: "No objectClass available to add"
+  op_readonly: "Operational attributes are read-only"
+  oc_delete_only: "objectClass can only be deleted (d)"
+  root_undeletable: "Root (suffix) cannot be deleted"
+  field_empty: "'%{field}' is required"
+  input_must_attr: "Enter required attribute: %{attr}"
+  cancelled: "Cancelled"
+  oc_added: "Added objectClass: %{name}"
+  oc_add_error: "objectClass add error: %{error}"
+  oc_deleted: "Deleted objectClass: %{name}"
+  modified: "Modified: %{attr}"
+  added: "Added: %{attr}"
+  deleted: "Deleted: %{dn}"
+  created: "Created: %{dn}"
+  add_error: "Add error: %{error}"
+  delete_error: "Delete error: %{error}"
+  fetch_error: "Fetch error: %{error}"
+  search_error: "Search error: %{error}"
+  parent_refetch_failed: "%{prev}  (failed to refetch parent: %{error})"
+  error_prefix: "Error: %{error}"
+  expand_confirm: "%{count} entries found. Show all? [y/N]"
+
+# UI labels
+ui:
+  tree_pane: "Tree"
+  detail_select_entry: "Select an entry"
+  detail_dn: "dn"
+  detail_op_readonly: "  [read only]"
+  detail_add_oc: " + Add objectClass"
+  detail_add_attr: " + Add attribute"
+  naming_context: "Naming Context"
+  search_title: "Search: %{filter}  (%{hits} hits)"
+  attr_picker_title: "Attribute Picker"
+  oc_picker_title: "objectClass Picker"
+  create_pick_oc_title: "Create child — Pick STRUCTURAL OC (%{parent})"
+  create_pick_rdn_title: "Pick RDN attribute — %{oc}"
+  create_form_title: "Create child: %{oc}"
+  parent_label: " Parent : "
+  dn_label: " DN     : "
+  rdn_badge: "  ← (RDN)"
+  action_dialog: "Action"
+  oc_delete_title: "Confirm objectClass deletion"
+  oc_delete_target: " Delete: "
+  oc_delete_managed_attrs: " Attributes managed by this objectClass:"
+  oc_delete_overflow: "   ... and %{count} more"
+  oc_delete_confirm: " Delete? [y/N]"
+  filter_label: " Filter: "
+  attr_name_input: " Attribute name: "
+  has_children_warn: "  ⚠ has child entries (server will reject)"
+  entry_delete_confirm: " Delete entry: %{dn}%{warn}  [y/N]"
+  attr_value_delete_confirm: " Delete  %{attr}: %{value}  [y/N]"
+
+# Suffix selection help
+suffix_help:
+  select: " ↑↓ / j k : Select"
+  browse: " Enter     : Browse"
+  quit: " q         : Quit"
+
+# Hint bar text
+hint:
+  search_input: " Enter: search  Esc: cancel"
+  attr_name: " Enter: enter value  Esc: cancel"
+  edit_value: " Enter: apply  Esc: cancel"
+  oc_delete: " y: confirm delete  any other: cancel"
+  suffix_select: " %{status}  |  ↑↓: select  Enter: browse  q: quit"
+  picker_status: " %{status}  |  Enter: select  Esc: cancel  ↑↓/jk: navigate"
+  picker_window: " Enter: select  Esc: cancel  ↑↓: navigate  type: filter"
+  create_pick_oc: "Enter: select  Esc: cancel  ↑↓/jk: navigate  type: filter"
+  create_pick_rdn: "Enter: confirm  Esc: cancel  ↑↓/jk: navigate"
+  create_form: "Tab/↓: next  Shift+Tab/↑: prev  Enter: confirm  Esc: cancel"
+  create_status: " %{status}  |  %{hint}"
+  browse_tree: "↑↓: select  →: expand  ←: collapse  a: create child  d: delete  /: search  Ctrl+r: reload  Tab: detail  q: quit"
+  browse_detail: "↑↓: row  ←→: col  e: edit  a: add  d: delete  Enter: action  Ctrl+r: reload  q: quit"
+  search_results_tree: "↑↓: select  /: new search  Esc: back  Tab: detail  q: quit"
+  search_results_detail: "↑↓: row  ←→: col  e: edit  a: add  d: delete  Enter: action  q: quit"
+  browse_status: " %{status}  |  %{hint}"
+
+# Action dialog labels
+action:
+  oc_label: "objectClass: %{value}"
+  del_only: "  [d] Delete  [Esc] Cancel"
+  edit_add: "  [e] Edit    [a] Add value"
+  del_cancel: "  [d] Delete  [Esc] Cancel"
+
+# Edit input prefix verbs
+input:
+  add: "Add"
+  edit: "Edit"
+
+# Authentication
+auth:
+  password_prompt: "Password: "

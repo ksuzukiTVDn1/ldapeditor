@@ -1,0 +1,22 @@
+# Rust build artifacts
+/target/
+
+# CI coverage reports (generated)
+coverage.xml
+lcov.info
+*.profraw
+*.profdata
+
+# Editors / IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Claude Code (local settings / internal docs)
+.claude/
+.claudeignore
+
+# Internal design docs
+DESIGN.md

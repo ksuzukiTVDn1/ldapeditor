@@ -1,0 +1,37 @@
+[package]
+name = "ldapeditor"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+rust-version = "1.85"
+description = "Keyboard-driven terminal UI for browsing and editing OpenLDAP entries — no LDIF files required."
+repository = "https://github.com/ksuzukiTVDn1/ldapeditor"
+readme = "README.md"
+keywords = ["ldap", "openldap", "tui", "ratatui", "directory"]
+categories = ["command-line-utilities"]
+
+[[bin]]
+name = "ldapeditor"
+path = "src/main.rs"
+
+[features]
+default = []
+# Vendor and statically link OpenSSL into the binary.
+# Used by release CI for cross-compilation targets (musl static, aarch64).
+vendored-tls = ["openssl/vendored"]
+
+[dependencies]
+ratatui = "0.29"
+crossterm = { version = "0.28", features = ["event-stream"] }
+tokio = { version = "1", features = ["full"] }
+tokio-stream = "0.1"
+anyhow = "1"
+ldap3 = "0.11"
+clap = { version = "4", features = ["derive"] }
+rpassword = "7"
+zeroize = "1"
+base64 = "0.22"
+fuzzy-matcher = "0.3"
+rust-i18n = "3"
+sys-locale = "0.3"
+openssl = { version = "0.10", optional = true }

@@ -1,5 +1,3 @@
-_version: 2
-
 # Status bar messages
 status:
   connected: "Connected: %{uri}"

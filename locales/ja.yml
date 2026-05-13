@@ -1,5 +1,3 @@
-_version: 2
-
 # ステータスバーのメッセージ
 status:
   connected: "接続: %{uri}"

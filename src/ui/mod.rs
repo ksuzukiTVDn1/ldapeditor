@@ -30,11 +30,14 @@ pub async fn run(
     let mut events = EventStream::new();
     loop {
         terminal.draw(|frame| draw(frame, app))?;
-        let Some(Ok(Event::Key(key))) = events.next().await else {
-            break;
-        };
-        if !app.handle_key(key).await {
-            break;
+        match events.next().await {
+            Some(Ok(Event::Key(key))) => {
+                if !app.handle_key(key).await {
+                    break;
+                }
+            }
+            Some(Ok(_)) => continue,
+            Some(Err(_)) | None => break,
         }
     }
     app.unbind().await;
